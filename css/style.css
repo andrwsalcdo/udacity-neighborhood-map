@@ -1,0 +1,15 @@
+html, body {
+  font-size: 14px;
+  height: 100%;
+  margin: 0;
+  padding-top: 35px;
+}
+
+/*nav bar hamburger button*/
+.btn {
+  margin: 8px 5px 5px 10px;
+}
+
+#map {
+  height: 100%;
+}
