@@ -11,11 +11,6 @@ var currentMarker;
 
 
 
-/*
-  Calls the initMap() function when the page loads
-    (implements the map)
-*/
-window.addEventListener('load', initMap);
 
 
 /*
@@ -23,17 +18,23 @@ window.addEventListener('load', initMap);
 */
 function initMap() {
 
-      //location of Star Wars Celebration 2017, & 'center' & 1 marker of map
+      //default map center. No Marker.
+      var mapCenter = {lat:28.432204 , lng: -81.451681};
+
+      //location of Star Wars Celebration 2017, &  1 marker of map
       var starWarsVenue = {lat: 28.424653, lng: -81.469516};
 
       var mapOptions = {
-        center: starWarsVenue,
-        zoom: 13
+        center: mapCenter,
+        zoom: 14
       }
 
       var markerArray = [];
 
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+      getYelpData('food', '28.424653,-81.469516', 'restaurants,bars');
+
 
       var venueMarker = new google.maps.Marker({
         map: map,
@@ -50,7 +51,6 @@ function initMap() {
         venueInfoWindow.open(map,venueMarker);
       });
 
-      getYelpData('food', 'orlando', 'restaurants');
 
       // ko.applyBindings(new ViewModel());
 }
@@ -66,10 +66,10 @@ function yelpMarkers (locationData, map) {
 
       locationData.businesses.forEach(function(business) {
 
-            var lat_Lng = {
+            lat_Lng = {
               lat: business.location.coordinate.latitude,
               lng: business.location.coordinate.longitude
-            };
+            }; //didn't work in markers[name]>postiion: -- ...maybe in contentString?
 
             var name = business.name;
             var phoneNumber = business.display_phone;
@@ -87,11 +87,11 @@ function yelpMarkers (locationData, map) {
 
           var infowindow = new google.maps.InfoWindow({
                 content: contentString,
-                maxWidth: 200
+                maxWidth: 350
           });
 
           markers[name] = new google.maps.Marker({
-                position: lat_lng,
+                position: new google.maps.LatLng(business.location.coordinate.latitude, business.location.coordinate.longitude),
                 map: map,
                 animation: google.maps.Animation.DROP,
                 title: name
@@ -114,7 +114,7 @@ function yelpMarkers (locationData, map) {
                 });
             });
         });
-  self.isVisible = ko.observable(true);
+  // self.isVisible = ko.observable(true);
 }
 
 
@@ -165,9 +165,9 @@ function getYelpData (termVal, locationVal, categoryVal) {
         dataType: 'jsonp',
         success: function(results) {
 
+          yelpMarkers(results, map)
           yelpResults = results;
           console.log(results);
-          yelpMarkers(results, map)
 
         },
         error: function(error) {
@@ -197,3 +197,8 @@ function getYelpData (termVal, locationVal, categoryVal) {
 //   this.placeList = ko.observableArray([]);
 //
 // }
+/*
+  Calls the initMap() function when the page loads
+    (implements the map)
+*/
+window.addEventListener('load', initMap);
