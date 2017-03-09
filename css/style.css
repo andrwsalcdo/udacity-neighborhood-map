@@ -13,3 +13,13 @@ html, body {
 #map {
   height: 100%;
 }
+
+/* yelp info windows*/
+#content {
+  font-size: 14px;
+}
+
+#yelp-img {
+  float: left;
+  padding: 10px; 
+}

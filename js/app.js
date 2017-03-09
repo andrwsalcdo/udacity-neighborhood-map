@@ -5,7 +5,7 @@
 var map; // declares a global map variable
 var yelpResults; //results of Yelp Search API
 var markers = {};
-var lat_lng;
+//var lat_lng;
 var currentInfoWindow = false;
 var currentMarker;
 
@@ -66,32 +66,42 @@ function yelpMarkers (locationData, map) {
 
       locationData.businesses.forEach(function(business) {
 
-            lat_Lng = {
+            lat_lng = {
               lat: business.location.coordinate.latitude,
               lng: business.location.coordinate.longitude
-            }; //didn't work in markers[name]>postiion: -- ...maybe in contentString?
+            };
+            var directions = "business.location.coordinate.latitude, business.location.coordinate.longitude";
+            var venue = "28.424653,-81.469516";
 
             var name = business.name;
-            var phoneNumber = business.display_phone;
-            var description = business.snippet_text;
-            var businessURL = business.url; // YELP display requirement
+            var img = business.image_url;
             var ratingImg = business.rating_img_url_small; //YELP display req
             var reviewCount = business.review_count; //YElP display req
-            var img = business.image_url;
+            var phoneNumber = business.display_phone;
+            var address = business.location.display_address[0];
+            var city = business.location.city;
+            var stateCode = business.location.state_code;
+            var postalCode = business.location.postal_code;
+            var description = business.snippet_text;
+            var businessURL = business.url; // YELP display requirement
 
             var contentString = '<div id="content">' +
                   '<h3 id="placeName">' + name + '</h3>' +
                   '<img src="' + ratingImg + '"></img>' + '(' + reviewCount + ')' +
+                  '<img id="yelp-img" src="' + img + '"/>' +
+                  '<p class="phone"><a href="tel: +' + phoneNumber + '">' + phoneNumber + '</a></p>' + //'<br>'
+                  '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + directions + '">' + address + '<br>' + city + ', ' + stateCode + ' ' + postalCode + '</a></p>' +
+                  '<p class="description">' + description + '<a href="' + businessURL +'" target="_blank"> (&#8230;)</a></p>' +
                   '</div>'; //end id=content
 
 
           var infowindow = new google.maps.InfoWindow({
                 content: contentString,
-                maxWidth: 350
+                maxWidth: 300  
           });
 
           markers[name] = new google.maps.Marker({
-                position: new google.maps.LatLng(business.location.coordinate.latitude, business.location.coordinate.longitude),
+                position: lat_lng,
                 map: map,
                 animation: google.maps.Animation.DROP,
                 title: name
