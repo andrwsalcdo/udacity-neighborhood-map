@@ -59,8 +59,6 @@ function initMap() {
 
 
 function yelpMarkers (locationData, map) {
-      // var self = this;
-      // self.title = yelpLocations.name;
 
       TODO: //  yelp logo variable. file in images folder
 
@@ -70,8 +68,7 @@ function yelpMarkers (locationData, map) {
               lat: business.location.coordinate.latitude,
               lng: business.location.coordinate.longitude
             };
-            var directions = business.location.coordinate.latitude, business.location.coordinate.longitude;
-            var venue = "28.424653,-81.469516";
+            var venue = "28.424653,-81.469516"; // location of starWarsVenue
 
             var name = business.name;
             var img = business.image_url;
@@ -90,7 +87,7 @@ function yelpMarkers (locationData, map) {
                   '<img src="' + ratingImg + '"></img>' + '(' + reviewCount + ')' +
                   '<img id="yelp-img" src="' + img + '"/>' +
                   '<p class="phone"><a href="tel: +' + phoneNumber + '">' + phoneNumber + '</a></p>' + //'<br>'
-                  '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + directions + '">' + address + '<br>' + city + ', ' + stateCode + ' ' + postalCode + '</a></p>' +
+                  '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + address + '+' + city + '+' + stateCode + '+' + postalCode + '">' + address + '<br>' + city + ', ' + stateCode + ' ' + postalCode + '</a></p>' +
                   '<p class="description">' + description + '<a href="' + businessURL +'" target="_blank"> (&#8230;)</a></p>' +
                   '</div>'; //end id=content
 
