@@ -70,7 +70,7 @@ function yelpMarkers (locationData, map) {
               lat: business.location.coordinate.latitude,
               lng: business.location.coordinate.longitude
             };
-            var directions = "business.location.coordinate.latitude, business.location.coordinate.longitude";
+            var directions = business.location.coordinate.latitude, business.location.coordinate.longitude;
             var venue = "28.424653,-81.469516";
 
             var name = business.name;
@@ -97,7 +97,7 @@ function yelpMarkers (locationData, map) {
 
           var infowindow = new google.maps.InfoWindow({
                 content: contentString,
-                maxWidth: 300  
+                maxWidth: 300
           });
 
           markers[name] = new google.maps.Marker({
