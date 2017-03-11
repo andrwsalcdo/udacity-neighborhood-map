@@ -33,7 +33,8 @@
       <!-- display each map marker with Knockout. todo: data-bind= " "-->
       <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: yelpList">
         <!--allow clicks on items to open infowindow on marker..todo: data-bind= " " -->
-        <li data-bind="text: title, click: listClick, visible: isVisible"></li>
+        <!-- click: listClick, visible: isVisible-->
+        <li data-bind="text: name "></li>
       </ul>
     </div>
   </div>
