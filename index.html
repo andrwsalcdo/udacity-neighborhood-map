@@ -34,7 +34,9 @@
       <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: yelpList">
         <!--allow clicks on items to open infowindow on marker..todo: data-bind= " " -->
         <!-- click: listClick, visible: isVisible-->
-        <li data-bind="text: name "></li>
+        <li data-bind="text: name ">
+          <!-- <img src=""  class= "img-responsive" data-bind: "attr: {src= ratingImg}" alt="yelp rating" ></img> -->
+        </li>
       </ul>
     </div>
   </div>

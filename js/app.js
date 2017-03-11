@@ -7,6 +7,7 @@ var yelpResults; //results of Yelp Search API
 var markers = {};
 var currentInfoWindow = false;
 var currentMarker;
+var InfoWindow;
 
 
 
@@ -37,8 +38,9 @@ function initMap() {
         map: map,
         animation: google.maps.Animation.DROP,
         position: starWarsVenue,
-        title: "Star Wars Celebration 2017!"
+        title: "Star Wars Celebration 2017!",
         //icon: todo: Some Star Wars icon, if possible.
+        icon: '.\/images/SW-Logo.png'
       });
 
       var venueInfoWindow = new google.maps.InfoWindow({
@@ -49,6 +51,7 @@ function initMap() {
         venueInfoWindow.open(map,venueMarker);
       });
 
+      InfoWindow = new google.maps.InfoWindow();
 }
 
 
@@ -102,7 +105,7 @@ function initMap() {
 
               //push each yelp business into yelpList array; create yelpMarker instance
               yelpResults.forEach (function(i) {
-                dataArray.push( new yelpMarker(i));
+                dataArray.push( new YelpMarker(i));
               });
               //extend map bounds to all markers
               var bounds = new google.maps.LatLngBounds();
@@ -132,16 +135,14 @@ var YelpMarker = function(data) {
 
       TODO: //  yelp logo variable. file in images folder
 
-
       var self = this;
-      var venue = "28.424653,-81.469516"; // location of starWarsVenue
 
       this.lat = data.location.coordinate.latitude;
       this.lng = data.location.coordinate.longitude;
       this.name = ko.observable(data.name);
       this.img = data.image_url;
       this.ratingImg = ko.observable(data.rating_img_url_small);
-      this.reviewCount = data.reviewCount;
+      this.reviewCount = data.review_count;
       this.phoneNumber = data.display_phone;
       this.address = data.location.display_address[0];
       this.city = data.location.city;
@@ -150,56 +151,77 @@ var YelpMarker = function(data) {
       this.description = data.snippet_text;
       this.businessURL = data.url;
 
+
       this.marker = new google.maps.Marker({
             title: self.name(),
             position: new google.maps.LatLng(self.lat, self.lng),
             map: map,
-            //icon: TODO,
-            animation: google.maps.Animation.DROP,
+            //icon: '.\/images/Green.png',
+            icon: '.\/images/Red.png',
+            animation: google.maps.Animation.DROP
       });
 
+      this.changeRed = function ()  {
+        self.marker.setIcon('.\/images/Red.png');
+      };
 
-      // var contentString = '<div id="content">' +
-      //         '<h3 id="placeName">' + name + '</h3>' +
-      //         '<img src="' + ratingImg + '"></img>' + '(' + reviewCount + ')' +
-      //         '<img id="yelp-img" src="' + img + '"/>' +
-      //         '<p class="phone"><a href="tel: +' + phoneNumber + '">' + phoneNumber + '</a></p>' + //'<br>'
-      //         '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + address + '+' + city + '+' + stateCode + '+' + postalCode + '">' + address + '<br>' + city + ', ' + stateCode + ' ' + postalCode + '</a></p>' +
-      //         '<p class="description">' + description + '<a href="' + businessURL +'" target="_blank"> (&#8230;)</a></p>' +
-      //         '</div>'; //end id=content
+      this.changeGreen = function ()  {
+        self.marker.setIcon('.\/images/Green.png');
+      };
 
 
-      // var infowindow = new google.maps.InfoWindow({
-      //       content: contentString,
-      //       maxWidth: 300
-      // });
+      var venue = "28.424653,-81.469516"; // location of starWarsVenue
 
-      // markers[name].addListener('click', function() {
-      //       if (currentInfoWindow) {
-      //           currentInfoWindow.close();
-      //           currentMarker.setAnimation(null);
-      //       }
-      //
-      //       currentInfoWindow = infowindow;
-      //       currentMarker = markers[name];
-      //
-      //       infowindow.open(map, markers[name]);
-      //       markers[name].setAnimation(google.maps.Animation.BOUNCE);
-      //
-      //       //pans to the marker
-      //       map.panTo(lat_lng);
-      //       //closes infowindow when a closeclick happens
-      //       google.maps.event.addListener(infowindow, 'closeclick', function() {
-      //           currentMarker.setAnimation(null);
-      //       });
-      //       //Close an open infowindow when the map is clicked
-      //       google.maps.event.addListener(map, 'click', function() {
-      //           infowindow.close();
-      //       });
-      //   });
-    //});
+      var contentString = '<div id="content">' +
+              '<h3 id="placeName">' + self.name() + '</h3>' +
+              '<img src="' + self.ratingImg() + '"></img>' + '(' + self.reviewCount + ')' +
+              '<img id="yelp-img" src="' + self.img + '"/>' +
+              '<p class="phone"><a href="tel: +' + self.phoneNumber + '">' + self.phoneNumber + '</a></p>' + //'<br>'
+              '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + self.address + '+' + self.city + '+' + self.stateCode + '+' + self.postalCode + '">' + self.address + '<br>' + self.city + ', ' + self.stateCode + ' ' + self.postalCode + '</a></p>' +
+              '<p class="description">' + self.description + '<a href="' + self.businessURL +'" target="_blank"> (&#8230;)</a></p>' +
+              '</div>'; //end id=content
 
-  // self.isVisible = ko.observable(true);
+      this.yelpInfoWindow = function() {
+          InfoWindow.open(map, self.marker);
+          self.changeGreen();
+          InfoWindow.setContent(contentString);
+      };
+
+      this.toggleBounce = function() {
+       self.marker.setAnimation(google.maps.Animation.BOUNCE);
+       setTimeout(function () {
+           self.marker.setAnimation(null);
+       }, 1400);
+     };
+
+     this.switchMarker = function() {
+           if (currentInfoWindow) {
+             currentInfoWindow.close();
+             currentMarker.setIcon('.\/images/Red.png');
+           }
+
+           currentInfoWindow = InfoWindow;
+           currentMarker = self.marker;
+
+           self.yelpInfoWindow();
+     };
+
+
+     this.mapClickCloseInfoWindow = function() {
+          //Close an open infowindow when the map is clicked
+          google.maps.event.addListener(map, 'click', function() {
+                  InfoWindow.close();
+                  self.changeRed();
+            });
+     };
+
+      this.marker.addListener('click', function() {
+          self.yelpInfoWindow();
+          self.toggleBounce();
+          self.switchMarker();
+          self.mapClickCloseInfoWindow();
+      });
+
 }
 
 
