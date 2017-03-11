@@ -51,6 +51,12 @@ function initMap() {
         venueInfoWindow.open(map,venueMarker);
       });
 
+      // //Set the center of the map when the window is being resized
+      //  google.maps.event.addDomListener(window, "resize", function() {
+      //      var centerResize = map.getCenter();
+      //      google.maps.event.trigger(map, "resize");
+      //      map.setCenter(centerResize);
+      //    });
 
       // ko.applyBindings(new ViewModel());
 }
@@ -58,7 +64,7 @@ function initMap() {
 
 
 
-function yelpMarkers (locationData, map) {
+function yelpMarkers (locationData) {
 
       TODO: //  yelp logo variable. file in images folder
 
@@ -116,11 +122,19 @@ function yelpMarkers (locationData, map) {
                 infowindow.open(map, markers[name]);
                 markers[name].setAnimation(google.maps.Animation.BOUNCE);
 
+                //pans to the marker
+                map.panTo(lat_lng);
+                //closes infowindow when a closeclick happens
                 google.maps.event.addListener(infowindow, 'closeclick', function() {
                     currentMarker.setAnimation(null);
                 });
+                //Close an open infowindow when the map is clicked
+                google.maps.event.addListener(map, 'click', function() {
+                    infowindow.close();
+                });
             });
         });
+
   // self.isVisible = ko.observable(true);
 }
 
@@ -188,22 +202,26 @@ function getYelpData (termVal, locationVal, categoryVal) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 // var ViewModel = function() {
-//   var self = this;
-//   //place array
-//   this.placeList = ko.observableArray([]);
+//       var self = this;
 //
-// }
+//       //array of yelp locations
+//       self.yelpList = ko.observableArray();
+//       //user input into search bar
+//       self.userInput = ko.observable('');
+//
+//
+//       self.filterYelp = ko.computed(function() {
+//             //search is not case sensitive
+//             var search =  self.userInput.toLowerCase();
+//
+//
+//
+//       }
+//
+// };
+
+
 /*
   Calls the initMap() function when the page loads
     (implements the map)

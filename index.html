@@ -31,7 +31,7 @@
   <div id="wrapper" aria-expanded="true" class="collapse in">
     <div id="list-sidebar" class="col-sm-3 col-md-2 text-nowrap sidebar">
       <!-- display each map marker with Knockout. todo: data-bind= " "-->
-      <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: placeList">
+      <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: yelpList">
         <!--allow clicks on items to open infowindow on marker..todo: data-bind= " " -->
         <li data-bind="text: title, click: listClick, visible: isVisible"></li>
       </ul>
