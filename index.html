@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udacity Neighborhood Map Project</title>
+  <title>Udacity Neighborhood Map Project: Star Wars Celebration 2017</title>
   <!-- Latest compiled and minified bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -15,27 +15,23 @@
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header pull-left">
-        <a href="#" class="navbar-brand"><strong>Star Wars Celebration 2017</strong></a>
+        <a class="navbar-brand"><strong>Star Wars Celebration 2017</strong></a>
       </div>
       <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <!--add data-bind with knockout values -->
-          <input type="text" class="form-control" placeholder="Search" data-bind="textInput: userInput">
-        </div>
+          <input type="text"  data-bind="value: query, valueUpdate: 'keyup'" class="form-control" placeholder="Search">
       </form>
       <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#wrapper" aria-expanded="true">&#9776;</button>
     </div>
   </nav>
 
-  <!-- sidebar with list of -->
+  <!-- sidebar with list of-->
   <div id="wrapper" aria-expanded="true" class="collapse in">
     <div id="list-sidebar" class="col-sm-3 col-md-2 text-nowrap sidebar">
       <!-- display each map marker with Knockout. todo: data-bind= " "-->
-      <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: yelpList">
-        <!--allow clicks on items to open infowindow on marker..todo: data-bind= " " -->
-        <!-- click: listClick, visible: isVisible-->
-        <li data-bind="text: name ">
+      <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: filterYelp">
+        <li>
           <!-- <img src=""  class= "img-responsive" data-bind: "attr: {src= ratingImg}" alt="yelp rating" ></img> -->
+          <span data-bind="text:name"></span>
         </li>
       </ul>
     </div>

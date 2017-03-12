@@ -39,7 +39,6 @@ function initMap() {
         animation: google.maps.Animation.DROP,
         position: starWarsVenue,
         title: "Star Wars Celebration 2017!",
-        //icon: todo: Some Star Wars icon, if possible.
         icon: '.\/images/SW-Logo.png'
       });
 
@@ -142,6 +141,8 @@ var YelpMarker = function(data) {
       this.name = ko.observable(data.name);
       this.img = data.image_url;
       this.ratingImg = ko.observable(data.rating_img_url_small);
+      // this.ratingImage = ko.observable(data.rating_img_url_large);
+      // this.ratingImg = data.rating_img_url_small;
       this.reviewCount = data.review_count;
       this.phoneNumber = data.display_phone;
       this.address = data.location.display_address[0];
@@ -222,6 +223,18 @@ var YelpMarker = function(data) {
           self.mapClickCloseInfoWindow();
       });
 
+      this.isVisible = ko.observable(false);
+
+      this.isVisible.subscribe(function(currentState) {
+          if (currentState) {
+            self.marker.setMap(map);
+          } else {
+            self.marker.setMap(null);
+          }
+        });
+
+      this.isVisible(true);
+
 }
 
 
@@ -229,22 +242,46 @@ var YelpMarker = function(data) {
 
 
 
-var ViewModel = function() {
+function ViewModel ()   {
       var self = this;
 
       /*
         *array of Yelp API data loaded from getYelpData
-        *bind yelpList to <ul> view
       */
       this.yelpList = ko.observableArray([]);
       getYelpData(this.yelpList);
 
-      //user input into search bar
-      self.userInput = ko.observable('');
+      //user key input into search bar
+      this.query = ko.observable('');
+
+      /*
+          Returns matched markers & sets their visibility = display
+          Returns matching subset of location items, similar to this.yelpList
+          foreach over the return value of the filterYelp computed observable in the view
+      */
+      this.filterYelp = ko.computed(function () {
+         // query is non case sensitive
+          var search = self.query().toLowerCase();
 
 
+          return ko.utils.arrayFilter(self.yelpList(), function (business) {
+                //if any character matches any marker
+                var doesMatch = business.name().toLowerCase().indexOf(search) >= 0;
+                //sets markers with match to visible
+                business.isVisible(doesMatch);
+
+                return doesMatch;
+
+            });
+        });
 
 
 };
+
+
+
+
+
+
 var vm = new ViewModel();
-ko.applyBindings (vm);
+ko.applyBindings (vm)
