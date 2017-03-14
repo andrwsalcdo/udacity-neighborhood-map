@@ -14,7 +14,8 @@ var InfoWindow;
 
 
 /*
-  Start here! initMap() is called when page is loaded.
+  inital google maps & Star Wars Venue Marker & infowindow.
+  todo: styling map. 
 */
 function initMap() {
 
@@ -28,8 +29,6 @@ function initMap() {
         center: mapCenter,
         zoom: 14
       }
-
-      var markerArray = [];
 
       map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -60,9 +59,6 @@ function initMap() {
         *Makes an asynch call to the Yelp Search API,
         *calls (todo: yelpMarkers()) with the results & stores the
         *results in a global var.
-        *@param {string} termVal - Search term (food, bars, etc)
-        *@param {string} locationVal - specifies the combination of address, city,etc
-        *@param {string} categoryVal - Category to filter search results with.
         *@param {array}  dataArray - the oberservvable Array of Yelp Business Results
       */
     function getYelpData (dataArray) {
@@ -97,7 +93,7 @@ function initMap() {
           var settings = {
             url: yelp_url,
             data: parameters,
-            cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+            cache: true,
             dataType: 'jsonp',
             success: function(results) {
               yelpResults = results.businesses;
@@ -129,65 +125,76 @@ function initMap() {
           $.ajax(settings);
     }
 
-
+    /**
+      *@var YelpMarker
+      *constructor function for each yelp business (YelpMarker instance) on the map.
+      *@param {array}  dataArray - results of getYelpData();
+    */
 var YelpMarker = function(data) {
 
-      TODO: //  yelp logo variable. file in images folder
 
-      var self = this;
+        var self = this;
 
-      this.lat = data.location.coordinate.latitude;
-      this.lng = data.location.coordinate.longitude;
-      this.name = ko.observable(data.name);
-      this.img = data.image_url;
-      this.ratingImg = ko.observable(data.rating_img_url_small);
-      // this.ratingImage = ko.observable(data.rating_img_url_large);
-      // this.ratingImg = data.rating_img_url_small;
-      this.reviewCount = data.review_count;
-      this.phoneNumber = data.display_phone;
-      this.address = data.location.display_address[0];
-      this.city = data.location.city;
-      this.stateCode = data.location.state_code;
-      this.postalCode = data.location.postal_code;
-      this.description = data.snippet_text;
-      this.businessURL = data.url;
+        this.lat = data.location.coordinate.latitude;
+        this.lng = data.location.coordinate.longitude;
+        this.name = ko.observable(data.name);
+        this.img = data.image_url;
+        this.ratingImg = ko.observable(data.rating_img_url_small);
+        this.reviewCount = data.review_count;
+        this.phoneNumber = data.display_phone;
+        this.address = data.location.display_address[0];
+        this.city = data.location.city;
+        this.stateCode = data.location.state_code;
+        this.postalCode = data.location.postal_code;
+        this.description = data.snippet_text;
+        this.businessURL = data.url;
 
 
-      this.marker = new google.maps.Marker({
-            title: self.name(),
-            position: new google.maps.LatLng(self.lat, self.lng),
-            map: map,
-            //icon: '.\/images/Green.png',
-            icon: '.\/images/Red.png',
-            animation: google.maps.Animation.DROP
-      });
+        this.marker = new google.maps.Marker({
+              title: self.name(),
+              position: new google.maps.LatLng(self.lat, self.lng),
+              map: map,
+              icon: '.\/images/Red.png',
+              animation: google.maps.Animation.DROP
+        });
 
+      //changes Marker to Red icon
       this.changeRed = function ()  {
         self.marker.setIcon('.\/images/Red.png');
       };
-
+      //changes Marker to Green icon
       this.changeGreen = function ()  {
         self.marker.setIcon('.\/images/Green.png');
       };
+      //center of map becomes marker location
+      this.reCenterMap = function () {
+           map.panTo(new google.maps.LatLng(self.lat, self.lng));
+       };
 
+       // location of starWarsVenue
+        var venue = "28.424653,-81.469516";
 
-      var venue = "28.424653,-81.469516"; // location of starWarsVenue
+        var contentString = '<div id="content">' +
+                '<h3 id="placeName">' + self.name() + '</h3>' +
+                '<img src="' + self.ratingImg() + '"></img>' + '(' + self.reviewCount + ')' +
+                '<img id="yelp-img" src="' + self.img + '"/>' +
+                '<p class="phone"><a href="tel: +' + self.phoneNumber + '">' + self.phoneNumber + '</a></p>' + //'<br>'
+                '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + self.address + '+' + self.city + '+' + self.stateCode + '+' + self.postalCode + '">' + self.address + '<br>' + self.city + ', ' + self.stateCode + ' ' + self.postalCode + '</a></p>' +
+                '<p class="description">' + self.description + '<a href="' + self.businessURL +'" target="_blank"> (&#8230;)</a></p>' +
+                '</div>'; //end id=content
 
-      var contentString = '<div id="content">' +
-              '<h3 id="placeName">' + self.name() + '</h3>' +
-              '<img src="' + self.ratingImg() + '"></img>' + '(' + self.reviewCount + ')' +
-              '<img id="yelp-img" src="' + self.img + '"/>' +
-              '<p class="phone"><a href="tel: +' + self.phoneNumber + '">' + self.phoneNumber + '</a></p>' + //'<br>'
-              '<p class="address"><a href="https://www.google.com/maps/dir/' + venue + '/' + self.address + '+' + self.city + '+' + self.stateCode + '+' + self.postalCode + '">' + self.address + '<br>' + self.city + ', ' + self.stateCode + ' ' + self.postalCode + '</a></p>' +
-              '<p class="description">' + self.description + '<a href="' + self.businessURL +'" target="_blank"> (&#8230;)</a></p>' +
-              '</div>'; //end id=content
-
+      /* Recenters Map to new marker lat & lng.
+       * Opens Infowwindow of marker and sets contentString
+       *Changes Marker to Green
+      */
       this.yelpInfoWindow = function() {
+          self.reCenterMap();
           InfoWindow.open(map, self.marker);
           self.changeGreen();
           InfoWindow.setContent(contentString);
       };
 
+      //Set Bounce Animation on Marker.
       this.toggleBounce = function() {
        self.marker.setAnimation(google.maps.Animation.BOUNCE);
        setTimeout(function () {
@@ -195,6 +202,12 @@ var YelpMarker = function(data) {
        }, 1400);
      };
 
+
+     /*If A marker is open, and
+      *if user clicks on B marker,
+      *A marker will close and changeRed();
+      *B marker will open.
+     */
      this.switchMarker = function() {
            if (currentInfoWindow) {
              currentInfoWindow.close();
@@ -207,24 +220,41 @@ var YelpMarker = function(data) {
            self.yelpInfoWindow();
      };
 
-
+     //closes infowindow when click on Map. changes marker to Red.
      this.mapClickCloseInfoWindow = function() {
-          //Close an open infowindow when the map is clicked
           google.maps.event.addListener(map, 'click', function() {
                   InfoWindow.close();
                   self.changeRed();
             });
      };
 
-      this.marker.addListener('click', function() {
-          self.yelpInfoWindow();
-          self.toggleBounce();
-          self.switchMarker();
-          self.mapClickCloseInfoWindow();
-      });
+     /*
+      * combines all helper functions into 1 click listener event,
+       *for the list view sidebar filter function in the viewmodel.
+     */
+     this.showMarkerInteraction = function() {
+           self.yelpInfoWindow();
+           self.toggleBounce();
+           self.switchMarker();
+           self.mapClickCloseInfoWindow();
+     };
 
+ /*visibility state & filter function help from:
+    *http://stackoverflow.com/questions/29557938/removing-map-pin-with-search
+ */
+
+     //map click listener on Marker.
+      this.marker.addListener('click', function() {
+            self.yelpInfoWindow();
+            self.toggleBounce();
+            self.switchMarker();
+            self.mapClickCloseInfoWindow();
+        });
+
+      //set visibility observable for yelpMarker
       this.isVisible = ko.observable(false);
 
+      //toggle visibility state & automatically register/deregister with map
       this.isVisible.subscribe(function(currentState) {
           if (currentState) {
             self.marker.setMap(map);
@@ -232,7 +262,7 @@ var YelpMarker = function(data) {
             self.marker.setMap(null);
           }
         });
-
+      //set default state to true
       this.isVisible(true);
 
 }
@@ -254,10 +284,14 @@ function ViewModel ()   {
       //user key input into search bar
       this.query = ko.observable('');
 
+
+      /*visibility state & filter function help from:
+         *http://stackoverflow.com/questions/29557938/removing-map-pin-with-search
+      */
       /*
           Returns matched markers & sets their visibility = display
           Returns matching subset of location items, similar to this.yelpList
-          foreach over the return value of the filterYelp computed observable in the view
+          forEach over the return value of the filterYelp computed observable in the view
       */
       this.filterYelp = ko.computed(function () {
          // query is non case sensitive
@@ -274,6 +308,12 @@ function ViewModel ()   {
 
             });
         });
+
+      //data-bind: Click event for listed items in side bar view.
+      //Open marker infowindow to corresponding marker from the list
+      this.selectYelp = function(YelpMarker) {
+              YelpMarker.showMarkerInteraction();
+        };
 
 
 };

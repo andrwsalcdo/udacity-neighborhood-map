@@ -31,7 +31,7 @@
       <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: filterYelp">
         <li>
           <!-- <img src=""  class= "img-responsive" data-bind: "attr: {src= ratingImg}" alt="yelp rating" ></img> -->
-          <span data-bind="text:name"></span>
+          <a data-bind="text:name, click: $parent.selectYelp"></a>
         </li>
       </ul>
     </div>
