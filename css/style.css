@@ -2,8 +2,10 @@ html, body {
   font-size: 14px;
   height: 100%;
   margin: 0;
-  padding-top: 35px;
+  padding-top: 25px;
 }
+
+
 
 /*nav bar hamburger button*/
 .btn {
@@ -14,12 +16,42 @@ html, body {
   height: 100%;
 }
 
+/*help from: http://stackoverflow.com/questions/6738145/google-maps-v3-change-size-of-infowindow */
+.gm-style-iw {
+  width: 324px !important;
+  height: 220px !important;
+  /*overflow-y: scroll !important;*/
+}
+
 /* yelp info windows*/
 #content {
   font-size: 14px;
 }
-
+#placeName {
+  font-size: 20px;
+  margin-bottom: 2px;
+}
 #yelp-img {
   float: left;
-  padding: 10px; 
+  padding: 8px;
+}
+
+
+/*Sidebar*/
+#list-sidebar {
+    background-color: black;
+    min-width: 255px;
+    /*padding-bottom: 0;*/
+}
+
+  /*#wrapper {
+    height: 100%;
+  }*/
+
+
+
+a {
+    text-align: center !important;
+    color: #AD2324 !important;
+    line-height: 0.95;
 }

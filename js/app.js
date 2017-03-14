@@ -15,7 +15,7 @@ var InfoWindow;
 
 /*
   inital google maps & Star Wars Venue Marker & infowindow.
-  todo: styling map. 
+  todo: styling map.
 */
 function initMap() {
 
@@ -155,7 +155,7 @@ var YelpMarker = function(data) {
               position: new google.maps.LatLng(self.lat, self.lng),
               map: map,
               icon: '.\/images/Red.png',
-              animation: google.maps.Animation.DROP
+              animation: google.maps.Animation.DROP,
         });
 
       //changes Marker to Red icon
