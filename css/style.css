@@ -8,8 +8,14 @@ html, body {
 
 
 /*nav bar hamburger button*/
-.btn {
+.hamburger-icon {
   margin: 8px 5px 5px 10px;
+  color: #fff;
+  background-color: #AD2324; //red
+  border-color: white;
+}
+.hamburger-icon:hover {
+  background-color: #0CBB06; //lightsaber green
 }
 
 #map {
@@ -22,6 +28,7 @@ html, body {
   height: 220px !important;
   /*overflow-y: scroll !important;*/
 }
+
 
 /* yelp info windows*/
 #content {
@@ -41,17 +48,12 @@ html, body {
 #list-sidebar {
     background-color: black;
     min-width: 255px;
-    /*padding-bottom: 0;*/
+
 }
-
-  /*#wrapper {
-    height: 100%;
-  }*/
-
 
 
 a {
     text-align: center !important;
     color: #AD2324 !important;
-    line-height: 0.95;
+    line-height: 0.9;
 }

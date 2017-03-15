@@ -20,13 +20,13 @@
       <form class="navbar-form navbar-right" role="search">
           <input type="text"  data-bind="value: query, valueUpdate: 'keyup'" class="form-control" placeholder="Search">
       </form>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#wrapper" aria-expanded="true">&#9776;</button>
+      <button class="btn btn-primary hamburger-icon" type="button" data-toggle="collapse" data-target="#wrapper" aria-expanded="true">&#9776;</button>
     </div>
   </nav>
 
   <!-- sidebar with list of-->
   <div id="wrapper" aria-expanded="true" class="collapse in">
-    <div id="list-sidebar" class="col-sm-3 col-md-2 text-nowrap sidebar">
+    <div id="list-sidebar" class="col-sm-3 col-md-2 text-justify sidebar">
       <!-- display each map marker with Knockout. todo: data-bind= " "-->
       <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: filterYelp">
         <li>
