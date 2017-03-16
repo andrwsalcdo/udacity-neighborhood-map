@@ -50,8 +50,14 @@ function initMap() {
       });
 
       InfoWindow = new google.maps.InfoWindow();
+
 }
 
+      //Error handling for Google Maps
+      function mapError() {
+          document.getElementById("map").innerHTML = "<h2> Sorry, this is not the map you are looking for. </h2>";
+          console.log("This is not the map you are looking for.");
+      };
 
 
       /**
@@ -116,7 +122,7 @@ function initMap() {
 
             },
             error: function(error) {
-              alert('Warning: This is not the location data you are looking for!')
+              alert('Warning: This is not the Yelp data you are looking for!')
               console.log("I have a bad feeling about this.");
             }
           };
@@ -317,10 +323,6 @@ function ViewModel ()   {
 
 
 };
-
-
-
-
 
 
 var vm = new ViewModel();
