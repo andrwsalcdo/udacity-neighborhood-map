@@ -18,7 +18,7 @@
         <a class="navbar-brand"><strong>Star Wars Celebration 2017</strong></a>
       </div>
       <form class="navbar-form navbar-right" role="search">
-          <input type="text"  data-bind="value: query, valueUpdate: 'keyup'" class="form-control" placeholder="Search">
+          <input type="text"  data-bind="value: query, valueUpdate: 'keyup'" class="form-control pull-right" placeholder="Search">
       </form>
       <button class="btn btn-primary hamburger-icon" type="button" data-toggle="collapse" data-target="#wrapper" aria-expanded="true">&#9776;</button>
     </div>
@@ -27,11 +27,9 @@
   <!-- sidebar with list of-->
   <div id="wrapper" aria-expanded="true" class="collapse in">
     <div id="list-sidebar" class="col-sm-3 col-md-2 text-justify sidebar">
-      <!-- display each map marker with Knockout. todo: data-bind= " "-->
-      <ul id="listed-items" class="nav nav-sidebar" data-bind="foreach: filterYelp">
+      <ul id="listed-items" class="nav nav-sidebar text-justify" data-bind="foreach: filterYelp">
         <li>
-          <!-- <img src=""  class= "img-responsive" data-bind: "attr: {src= ratingImg}" alt="yelp rating" ></img> -->
-          <a data-bind="text:name, click: $parent.selectYelp"></a>
+          <a data-bind="text:name, click: $parent.selectYelp, css: {clickedYelp: $data == $root.clickedYelp() }"></a>
         </li>
       </ul>
     </div>

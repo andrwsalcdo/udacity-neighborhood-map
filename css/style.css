@@ -18,6 +18,7 @@ html, body {
   background-color: #0CBB06; //lightsaber green
 }
 
+
 #map {
   height: 100%;
 }
@@ -26,7 +27,6 @@ html, body {
 .gm-style-iw {
   width: 324px !important;
   height: 220px !important;
-  /*overflow-y: scroll !important;*/
 }
 
 
@@ -48,12 +48,25 @@ html, body {
 #list-sidebar {
     background-color: black;
     min-width: 255px;
-
 }
-
 
 a {
     text-align: center !important;
     color: #AD2324 !important;
     line-height: 0.9;
+    cursor: pointer;
+}
+
+/*added to clicked <li> on list view */
+.clickedYelp {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #0CBB06 !important;
+}
+
+
+@media screen and (max-width: 767px) {
+    body {
+      padding-top: 100px;
+    }
 }
