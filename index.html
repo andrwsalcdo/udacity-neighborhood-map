@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Udacity Neighborhood Map Project: Star Wars Celebration 2017</title>
-  <!-- Latest compiled and minified bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/style.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Udacity Neighborhood Map Project: Star Wars Celebration 2017</title>
+	<!-- Latest compiled and minified bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <!-- Navbar with header & search bar-->
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header pull-left">
-        <a class="navbar-brand"><strong>Star Wars Celebration 2017</strong></a>
-      </div>
-      <form class="navbar-form navbar-right" role="search">
-          <input type="text"  data-bind="value: query, valueUpdate: 'keyup'" class="form-control pull-right" placeholder="Search">
-      </form>
-      <button class="btn btn-primary hamburger-icon" type="button" data-toggle="collapse" data-target="#wrapper" aria-expanded="true">&#9776;</button>
-    </div>
-  </nav>
+	<!-- Navbar with header & search bar-->
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header pull-left">
+				<a class="navbar-brand"><strong>Star Wars Celebration 2017</strong></a>
+			</div>
+			<form class="navbar-form navbar-right" role="search">
+				<input type="text" data-bind="value: query, valueUpdate: 'keyup'" class="form-control pull-right"
+				placeholder="Search">
+			</form>
+			<button class="btn btn-primary hamburger-icon" type="button" data-toggle="collapse"
+			data-target="#wrapper" aria-expanded="true">&#9776;</button>
+		</div>
+	</nav>
 
-  <!-- sidebar with list of-->
-  <div id="wrapper" aria-expanded="true" class="collapse in">
-    <div id="list-sidebar" class="col-sm-3 col-md-2 text-justify sidebar">
-      <ul id="listed-items" class="nav nav-sidebar text-justify" data-bind="foreach: filterYelp">
-        <li>
-          <a data-bind="text:name, click: $parent.selectYelp, css: {clickedYelp: $data == $root.clickedYelp() }"></a>
-        </li>
-      </ul>
-    </div>
-  </div>
+	<!-- sidebar with list of-->
+	<div id="wrapper" aria-expanded="true" class="collapse in">
+		<div id="list-sidebar" class="col-sm-3 col-md-2 text-justify sidebar">
+			<ul id="listed-items" class="nav nav-sidebar text-justify" data-bind="foreach: filterYelp">
+				<li>
+					<a data-bind="text:name, click: $parent.selectYelp, css: {clickedYelp: $data == $root.clickedYelp() }"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
 
-  <!-- Google Maps-->
-  <div id="map"></div>
+	<!-- Google Maps-->
+	<div id="map"></div>
 
-  <!-- Jquery -->
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-  <!--oAuth-signature -->
-  <script src="js/lib/oauth-signature.min.js"></script>
-  <!-- Latest compiled and minified Bootstrap for toggle list with collapse transition -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <!-- Knockout for data-binding, map marker filtering-->
-  <script src="js/lib/knockout-3.4.1.js"></script>
-  <!--Main App JS  -->
-  <script src="js/app.js"></script>
-  <!--Google Maps API  -->
-  <script async defer onerror="mapError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE_BEEs1_iQlWmtqsJP_4_1rueRYgFtQc&callback=initMap"></script>
+	<!-- Jquery -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<!--oAuth-signature -->
+	<script src="js/lib/oauth-signature.min.js"></script>
+	<!-- Latest compiled and minified Bootstrap for toggle list with collapse transition -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Knockout for data-binding, map marker filtering-->
+	<script src="js/lib/knockout-3.4.1.js"></script>
+	<!--Main App JS  -->
+	<script src="js/app.js"></script>
+	<!--Google Maps API  -->
+	<script async defer onerror="mapError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBE_BEEs1_iQlWmtqsJP_4_1rueRYgFtQc&callback=initMap"></script>
 
 </body>
+
 </html>
