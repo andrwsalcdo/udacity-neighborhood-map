@@ -19,8 +19,9 @@ A map surrounding the Orange County Convention Center in Orlando, FL showing loc
 Experience the app at https://andrwsalcdo.github.io/udacity-neighborhood-map
 
 To explore the codebase:
-- Visit https://github.com/andrwsalcdo/udacity-neighborhood-map
-- Clone or download the repository
+- Clone or download the ZIP link
+- Open the index.html file.
+- You need a working internet connection because the app draws information from Google Maps & Yelp. 
 
 ### App functionalities
 - Automatically adapts to different viewports, adjusts bounds and zooms to accommodate all markers.
