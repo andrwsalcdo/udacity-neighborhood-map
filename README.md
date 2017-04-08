@@ -14,6 +14,10 @@ A map surrounding the Orange County Convention Center in Orlando, FL showing loc
 
 >Starting on April 1st, 2017, you will no longer be able to sign up for Yelp API v2.
 
+<hr>
+
+![demo image](images/SW-map.png)
+
 ### How to get started
 
 Experience the app at https://andrwsalcdo.github.io/udacity-neighborhood-map
@@ -21,7 +25,7 @@ Experience the app at https://andrwsalcdo.github.io/udacity-neighborhood-map
 To explore the codebase:
 - Clone or download the ZIP link
 - Open the index.html file.
-- You need a working internet connection because the app draws information from Google Maps & Yelp. 
+- You need a working internet connection because the app draws information from Google Maps & Yelp.
 
 ### App functionalities
 - Automatically adapts to different viewports, adjusts bounds and zooms to accommodate all markers.
