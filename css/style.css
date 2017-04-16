@@ -44,6 +44,9 @@ body {
     background-color: black;
     min-width: 255px;
 }
+#listed-items {
+    padding: 10px 0;
+}
 a {
     text-align: center !important;
     color: #AD2324 !important;
@@ -58,8 +61,19 @@ a {
     color: #0CBB06 !important;
 }
 /****** Media Query*****/
-@media screen and (max-width: 767px) {
+
+@media screen and (max-width: 768px) {
     body {
-        padding-top: 100px;
+      padding-top: 100px;
+    }
+}
+@media screen and (min-width: 768px) {
+    body {
+      padding-top: 25px;
+    }
+}
+@media screen and (min-width: 768px) and (min-height: 720px) {
+    #list-sidebar {
+      height: 100vh;
     }
 }
